@@ -1,0 +1,29 @@
+version: '3.9'
+
+services:
+
+  db:
+    # https://hub.docker.com/_/postgres
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+      PGDATA: /var/lib/postgresql/data
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  pgadmin:
+    # https://hub.docker.com/r/dpage/pgadmin4/
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: password
+      PGADMIN_SERVER_JSON_FILE: /pgadmin4/servers.json
+    ports:
+      - 8080:80
+    volumes:
+      - ./servers.json:/pgadmin4/servers.json
+
+volumes:
+  pgdata:
